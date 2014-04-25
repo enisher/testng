@@ -10,6 +10,7 @@ import org.testng.TestRunner;
 import org.testng.annotations.IAnnotation;
 import org.testng.annotations.IFactoryAnnotation;
 import org.testng.annotations.IParametersAnnotation;
+import org.testng.collections.Lists;
 import org.testng.internal.annotations.IAnnotationFinder;
 import org.testng.internal.annotations.Sets;
 import org.testng.junit.IJUnitTestRunner;
@@ -178,13 +179,13 @@ public final class ClassHelper {
    * @param clazz
    * @return
    */
-  public static Set<Method> getAvailableMethods(Class<?> clazz) {
-    Set<Method> methods = Sets.newHashSet();
+  public static List<Method> getAvailableMethods(Class<?> clazz) {
+    List<Method> methods = Lists.newArrayList();
     methods.addAll(Arrays.asList(clazz.getDeclaredMethods()));
 
     Class<?> parent = clazz.getSuperclass();
     while (Object.class != parent) {
-      methods.addAll(extractMethods(clazz, parent, methods));
+      methods.addAll(0, extractMethods(clazz, parent, methods));
       parent = parent.getSuperclass();
     }
 
@@ -220,7 +221,7 @@ public final class ClassHelper {
   }
 
   private static Set<Method> extractMethods(Class<?> childClass, Class<?> clazz,
-      Set<Method> collected) {
+      List<Method> collected) {
     Set<Method> methods = Sets.newHashSet();
 
     Method[] declaredMethods = clazz.getDeclaredMethods();
@@ -249,7 +250,7 @@ public final class ClassHelper {
     return methods;
   }
 
-  private static boolean isOverridden(Method method, Set<Method> collectedMethods) {
+  private static boolean isOverridden(Method method, List<Method> collectedMethods) {
     Class<?> methodClass = method.getDeclaringClass();
     Class<?>[] methodParams = method.getParameterTypes();
 

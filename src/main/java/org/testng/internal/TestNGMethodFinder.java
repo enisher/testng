@@ -102,7 +102,7 @@ public class TestNGMethodFinder implements ITestMethodFinder {
   private ITestNGMethod[] findConfiguration(final Class clazz, final int configurationType) {
     List<ITestNGMethod> vResult = Lists.newArrayList();
 
-    Set<Method> methods = ClassHelper.getAvailableMethods(clazz);
+    List<Method> methods = ClassHelper.getAvailableMethods(clazz);
 
     for (Method m : methods) {
       IConfigurationAnnotation configuration = AnnotationHelper.findConfiguration(m_annotationFinder, m);

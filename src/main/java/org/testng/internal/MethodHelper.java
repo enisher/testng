@@ -346,7 +346,7 @@ public class MethodHelper {
   }
 
   protected static String calculateMethodCanonicalName(Class<?> methodClass, String methodName) {
-    Set<Method> methods = ClassHelper.getAvailableMethods(methodClass); // TESTNG-139
+    List<Method> methods = ClassHelper.getAvailableMethods(methodClass); // TESTNG-139
     Method result = null;
     for (Method m : methods) {
       if (methodName.equals(m.getName())) {
